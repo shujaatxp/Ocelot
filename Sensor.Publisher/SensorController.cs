@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Sensor.Publisher
+namespace Sensor.Publisher.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class SensorController : ControllerBase
     {
-        public readonly IWeatherDataPublisher weatherDataPublisher;
+      
+        private readonly IWeatherDataPublisher weatherDataPublisher;
 
         public SensorController(IWeatherDataPublisher weatherDataPublisher)
         {
@@ -19,5 +20,11 @@ namespace Sensor.Publisher
         {
             await weatherDataPublisher.ProduceAsync(weather);
         }
+
+      
+      
     }
+
+
+   
 }

@@ -1,5 +1,7 @@
 using Confluent.Kafka;
 using Sensor.Publisher;
+using Sensor.Publisher.Controllers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var config = new ProducerConfig
-{
-    BootstrapServers = "localhost:9092"
-};
+var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
 
 builder.Services.AddSingleton<IProducer<Null, string>>(x => new
 ProducerBuilder<Null, string>(config).Build());
@@ -30,6 +29,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 
 app.Run();
